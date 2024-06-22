@@ -1,0 +1,141 @@
+SQL : ( Structured Query Language )
+
+  Let me Explain what is the usecase of SQL
+
+* To Communicate between mobile and memory card we use android os...Same like mobile , we have database management system , and also we have a database were we can save the data ,To Communicate B/W both we are using SQL Programming Language 
+
+* Different types of Database :
+
+ - relational Database
+ - NoSQL database
+ - Hierarchical database
+ - Networking database 
+
+* Most of the time we are commonly use relational database...let's see the types...
+ 
+ - oracle
+ - MySQL
+ - Sql server
+ - postcresql
+
+* We are going to learn MySQL , it is very easy to learn 
+* There are 3 types of data 
+  - Structured (Excel - defined structure)
+  - Unstructured (Social media)
+  - Semi Structured -(email)
+
+* Relational Database are table like structure using sql we can communicate 
+* Non - Relational Database are  unstructure using No-sql we can communicate 
+
+
+Commands :
+---------
+
+*To create a data base :
+create database databaseName
+
+* Before creating table we need to tell which database we are going to use 
+
+ -  use databaseName
+
+* Create a tablet and mention the key name 
+- create table tableName(
+name varchar(100),
+age int
+)
+
+*How to insert the value to the table :
+ - insert into tableName value("Krish",25)
+
+
+* To View the Table Data :
+- select * from tableName
+
+* To delete the table :
+ - Drop table tabelName
+
+* Any data you want alter it 
+ -  alter table customer column  customer_address address varchar(100)
+
+* Add extra Column :
+ - alter table customer add column mobile_number int
+
+* How to delete the column base on condition : for null we should use null 
+ - delete from customer where  Mobile_number is null
+common delete :
+- delete from customer where Customer_id = 1 => Row will Delete
+
+* How to update the particular cell :
+
+- update customer set customer_id = 5 where name="krish" 
+
+* How to filter the data depend on particular value :
+
+- select * from customer where city = "arni"
+
+* Based on id we can print it :
+
+- select * from customer where customer_id > 5
+
+* How do you delete particular column :
+
+- alter table customer drop column mobile_number
+
+* How do you truncate a table ?
+ Truncate is nthg but deleting all the data inside the table except heading 
+
+- truncate table customer 
+
+
+Aggregate Functions :
+
+sum()
+max()
+min()
+avg()
+count()
+
+
+select * from student
+
+select student_mark from student  => only student_mark will appear 
+
+select sum(student_mark) from student => using sum() adding all the mark gives total
+
+select max(student_mark) from student => maximum mark will be output
+
+select min(student_mark) from student => minimum mark will be output
+
+select count (student_name) from student where department = "cse"
+
+ select student_name,mark from 
+
+Group By & Order By
+
+select * from student where department="CSE"
+
+orderBy :
+--------
+* selecting mark arrange as descending order :
+ - select student_name,mark from student order by mark desc
+
+
+* To sum all the mark we can use aggregate function 
+
+ - select sum(student_mark) from student 
+
+* How to see the particular department average for "cse"
+
+ - select avg(student_mark) from student where department = "cse"
+
+* to see all the department avg :
+
+- select avg(mark),department from student group by department;
+
+- select avg(mark),department,count(name) from student group by department order by count(name) asc;
+
+
+
+Having clause :
+
+when your applying condition to aggregate function then you can use  Having cluse
