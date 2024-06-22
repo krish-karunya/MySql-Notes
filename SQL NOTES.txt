@@ -1,0 +1,369 @@
+
+
+Creating and Dropping table :
+create database database_name
+drop database database_name
+drop database if exsist database_name
+
+create table table_name
+drop table table_name
+
+Alter :
+
+Alter table table_name add column_name data_type
+Alter table table_name drop  column_name
+
+Truncate Table :
+The TRUNCATE TABLE command deletes the data inside a table, but not the table itself.
+TRUNCATE TABLE Categories;
+
+
+Insert : 
+
+Insert in to table_name(name,age) values 
+("krish",25),
+("Amma",50)
+
+
+Select :
+
+Select * from table_name ;   => all the row and colum
+select name from table_name ;  => specific row and column 
+
+where : -  along with( < , > , - , + , = , between , like , in , not )
+ 
+used to filter the data based on condition :
+
+select name from table_name where name = "krish";
+select age from table_name where age > 50;
+
+Between => between two range  => between 10 and 30 ;
+select age from table_name where age between 10 and 30 ;
+
+
+like => wildcards ( _ , %)
+select name from table_name where name like "_mma"
+select name from table_name where name like "K%"
+
+Any :
+Returns true if any of the subquery values meet the condition
+
+select age from employee 
+where age = any(25,30,35) => consider number as subquery  result 
+
+All : 
+Returns true if all of the subquery values meet the condition
+
+select age from employee 
+where age > all (25,30,35) => consider number as subquery  result 
+
+it will compare one value to all the value , if any one is fail return false , in case eg: 30 number will fail bcoz 35 is greater , if your value is 45 , it is greater than all the number in the bracket so it will true that line will execute 
+
+In :
+The IN command allows you to specify multiple values in a WHERE clause.
+The IN operator is a shorthand for multiple OR conditions.
+
+SELECT * FROM Customers
+WHERE Country ="Germany " or country= "France " or country = "UK "
+
+SELECT * FROM Customers
+WHERE Country IN ('Germany', 'France', 'UK');
+
+
+Limit 1 ;
+
+And operator :  Both should true
+condition => true and true 
+
+Or operator : Any one is true 
+condition => true or false 
+
+Update is used to update the exsisiting data ;
+update table_name set name = "Anna" where name ="krish";
+
+To delete all the row :
+Delete from tabel_name ;
+Delete from tabel_name where id=1 ;
+
+
+Distinct keyword : To remove the Duplicates
+select distinct name from table_name ; 
+
+Order by : default ascending order 
+
+(limit & order by)=> Always use at end of the condition ;
+
+select * from employ order by salary ;
+select * from employ where job = "manager" salary desc
+
+case : It is like if-esle condition ;
+select * from employe
+order by (case job_description
+when "ceo" then 1
+when "manager " then 2
+when "employee" then 3
+else 100 end 
+);
+
+
+
+Copy table :
+
+Copy all the data from old table to new table :
+select * into New_Table  from old_table
+
+Copy Specific  data from old table to new table :
+select emp_name , emp_id  into New_Table  from old_table
+
+Copy Specific  data from old table to new table to Newdatabase :
+select emp_name , emp_id  into New_Table  in Newdatabase_name.db
+ from old_table
+
+Copy two table data in single table  : 
+SELECT Customers.CustomerName, Orders.OrderID
+INTO CustomersOrderBackup2017
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+
+
+Aggricate Function and function  :
+count( ) , max( ) , min( ), Avg( ) ,sum( )
+select count(*) from employee ;
+select max(salary) from employee ;
+select min(salary) from employee ;
+select avg(salary) from employee ;
+select sum(salary) from employee ;
+
+Function :
+ucase( "krish")=> "KRISH", 
+select ucase(name) from employee ;
+
+char_length("krish" )=> 5 ,
+select name, char_length(name)
+
+ concat( "Rs.", salary) =>Rs.45000
+select  name , concat("Rs.", salary) from employee;
+
+left ( "krishna",5) => "krish"
+select left(name,5) from employee;
+
+ format ( 10000) => 10,000
+select format(salary) from employee ;
+
+
+Date :
+
+Alter table table_name add column hire_date Date ;
+update table_name  set hire_date = "2022-08-14"
+
+select now(); => current date and time 
+select date(now( )) => current date 
+select curdate( ); => current system date
+select date_format(curdate( ),' %d/%m/%y')
+select datediff(curdate( ), '2024- 8 - 14' )
+
+SELECT CURDATE( ) 'start date',
+ DATE_ADD(CURDATE(),INTERVAL 1 DAY) 'one day later',
+ DATE_ADD(CURDATE(),INTERVAL 1 WEEK) 'one week later',
+ DATE_ADD(CURDATE(),INTERVAL 1 MONTH) 'one month later',x
+ DATE_ADD(CURDATE(),INTERVAL 1 YEAR) 'one year later';
+
+
+
+Group by :
+
+Group by is used to group the table based on conditions and analyse values within the group using aggregate functions.
+Where is used to filter the rows before grouping. Having is used to filter the groups.
+
+Assume that we have table had job_description and salary details 
+
+To find the all role average salary :
+select job_description, fromat(avg(salary),0)
+from employee group by job_description 
+
+Grouped by job description and count of all job_desc  Employee count  and employee  who are morethan 15L salary :
+select job_desc , count(id) from employee
+where salary >1500000
+group by job_desc having count(id) > 1
+order by job_desc ; 
+
+Rollup :
+
+ Rollup, extension of group by clause
+ produces another row and show the grand total (super-aggregate value)
+
+select  count(*),branch_name from employee
+group by branch_name With Rollup
+
+Constraints :
+Constraints are used to limit the type of data that can go into a table.
+we are applying specific rule before data enter in to the table ,
+
+not null , auto_increament , default,check , unique 
+
+CREATE TABLE employee (
+emp_id INT PRIMARY KEY AUTO_INCREMENT, -- id will be auto incremented for new rows
+ename VARCHAR(30) NOT NULL, -- null value cannot be inserted for the column
+job_desc VARCHAR(20) DEFAULT 'unassigned', -- sets default when not mentioned
+salary INT,
+pan VARCHAR(10) UNIQUE,-- cannot contain duplicates
+CHECK (salary>100000)); 
+ Bachelor of Business Administration.
+
+
+Foreign key :
+Foreign key is a field in one table referring to the primary key of another table.
+one table as one or more  foreign key we can create as per our need 
+
+why foreign wt's use ?
+when we creating foreign if someone try to delete the any row from table it will show error , becoz two table are linked together , it not allow you to delete 
+
+CREATE TABLE branch (
+branch_id INT PRIMARY KEY AUTO_INCREMENT,
+br_name VARCHAR(30) NOT NULL,
+addr VARCHAR(200)
+manager_id int
+constrain branch_fk foreign key (manager_id) reference employee.emp_id
+ );
+
+-- create employee table with branch_id as foreign key. It refers to the branch_id of branch table.
+CREATE TABLE employee (
+emp_id INT PRIMARY KEY,
+ename VARCHAR(30),
+job_desc VARCHAR(20),
+salary INT,
+branch_id INT,
+constraint fk_branch_id  foreign key (branch_id)  reference  branch.branch_id);
+
+
+Now if you try to delete the brach table you will get error , why because branch table is linked with employee table 
+
+
+Delete the foreign :
+If you give constraint name using  that we can easily delete the foreign key
+
+alter table employee
+drop foreign key fk_branch_id
+
+On Delete with for key :
+ Above example we have seen we can't able to delete branch due to it is linked with employee via foreign key
+ solution is ......
+
+whenever we are creating a foreign key we should mention on delete , whwn we delete the link table what should happen that will mention in  On Delete  =>  Casecade or set Null
+
+CREATE TABLE employee (
+emp_id INT PRIMARY KEY,
+ename VARCHAR(30),
+job_desc VARCHAR(20),
+salary INT,
+branch_id INT,
+constraint fk_branch_id  foreign key (branch_id)  reference  branch.branch_id
+on delete set null
+);
+
+ on delete set null :
+meaning of on delete on above code is ... if branch table is not there means  set valus as null in employee table 
+
+ on delete casecade :
+ Entire row will delete
+
+Index : 
+
+Defaultly  every table one indexing  definetly created , that should our primary  id , while using index data searching result time is very fast , Assume that your searching name and id we have a 1000 s of row , here it will take more time to get result .becoz in name we dont have indexing , to avoid that we can create indexing whereever we want but , while inserting and deleting will take time and also it take more storage , create indexing only reqiured , don't create unneccessarly  and if add unique keyword it will also consider as a index 
+
+types of index : descending indexi, fulltext index 
+
+show index from tableName ;
+
+syntax for create index :
+
+ create index indexname on tabeName(column name );
+ create index name_index on employee(ename)
+
+Delete :
+alter table  employee drop index name_index 
+
+Add:
+alter table  employee Add index (ename)
+
+ Joins :
+Joins are used to join columns from two tables
+
+-- inner join: only matching rows
+-- Right join is matched rows + all other rows in right table
+-- Left join is matched rows with all other rows in left table 
+-- Outer Join  return all the row from left and right whther it is match or not
+
+Union :
+union combines two table having equal number of columns and matching datatypes
+usually we will join two table vertically , using union it will connect the table horizontally 
+we can choose specific column to merge
+
+Two types  :  union , union all  
+
+union => it wil remove the duplicate while joining two table 
+union all => it will show all the value 
+
+select * from table1;                         select * from table1;
+union                                                union  all
+select * from table 2;                        select * from table 2;
+
+
+Subqueries :
+Subqueries combine more than 2 queries.
+
+Related to two table :
+select  * from employee 
+where branch_id  =  (select  branch_id  from branch where br_name = "chennai") 
+
+Related to table itself :
+select *  from employee 
+where salary = (select min(salary) from employee)
+
+Exists :
+
+Along with "Where" we can use Exists , using subquery s we can apply condition,it will give true and false value  ,if condition fail return emply table 
+
+here we are checking admin details :
+
+select brand_id , br_name from branch
+where exists(
+select *  from employee 
+where job_description = "Admin"  and  branch.branch_id = emp.branch_id) 
+
+Note different b/w Exists and Any :
+Exists is same as any except for the time consumed will be less as, in ANY the query goes on executing where ever the condition is met and gives results . In case of exists it first has to check throughout the table for all the records that match and then execute it.
+
+
+View :   
+a view is a virtual table based on the result set of an SQL statement.
+
+
+select name,salary from employee  => Assume that this command we are using every day morethan 50 times ,How much time it would take ? Instead  write this command again n again you  need to create a view , it is kind of virtual table and doesn't take any memory , it is just referring or mapping   to the view statement which we were created in database 
+
+Syntax:
+
+create view viewname as
+SQL statement 
+
+Eg : 
+create view Emp_info as
+select name,salary from employee;
+
+select * from Emp_info 
+
+Modify : (to modify exsisting view )
+create or replace  view Emp_info as
+select name,age from employee;
+
+Drop :
+Drop view Emp_info ;
+
+
+
+
+
+
+
+
+
